@@ -1,0 +1,8 @@
+[project]
+name="farm-dev"
+version = "0.0.1"
+dependencies = [
+]
+
+[tool.ruff]
+extend-select = ["C", "N", "SIM"]
