@@ -2,7 +2,7 @@
 
 This document contains initial information for this project necessary for the first contact with it. Through this you will find information such as requirements, architectural decisions and records of discussions held
 
-## Overviw
+## Overview
 
 Finding the best drugs for certain diseases is a difficult challenge. To solve this, animal testing continues to be an option, yet following behavioral manifestations after administration of certain substance is tedious, time and attention consuming from the experts. Different tracking software applications, from high-cost commercial services to open-source applications, are available.
 
