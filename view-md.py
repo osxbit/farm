@@ -4,21 +4,20 @@ import zlib
 
 
 def encode_text(data: str) -> str:
-    return base64.urlsafe_b64encode(zlib.compress(data.encode('utf-8'), 9)).decode()
+    return base64.urlsafe_b64encode(zlib.compress(data.encode("utf-8"), 9)).decode()
+
 
 LANG_DICT = {
     "plantuml": "https://kroki.io/c4plantuml/svg/{data}",
     "blockdiag": "https://kroki.io/blockdiag/svg/{data}",
 }
 
-def process(input: Path):
 
+def process(input: Path):
     encode_flag = False
     lang = ""
     data_collected = []
     for line in input.read_text().splitlines():
-
-
         if line.startswith("```") and not encode_flag:
             encode_flag = True
             lang = line[3:]
@@ -41,6 +40,8 @@ def process(input: Path):
             data_collected.append(line)
 
 
-Path(r"D:\dev\farm-dev\docs\discussions\001-requirements-analysis.proc.md").write_text("\n".join(
-    process(Path(r"D:\dev\farm-dev\docs\discussions\001-requirements-analysis.md"))
-))
+Path(r"D:\dev\farm-dev\docs\discussions\001-requirements-analysis.proc.md").write_text(
+    "\n".join(
+        process(Path(r"D:\dev\farm-dev\docs\discussions\001-requirements-analysis.md"))
+    )
+)
