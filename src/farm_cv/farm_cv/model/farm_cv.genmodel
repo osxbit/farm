@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel"
+    modelDirectory="/farm_cv/src-gen" creationIcons="false" editDirectory="/farm_cv.edit/src-gen"
+    editorDirectory="/farm_cv.editor/src-gen" modelPluginID="farm_cv" modelName="Farm_cv"
+    rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container" codeFormatting="true"
+    importerID="org.eclipse.emf.importer.ecore" complianceLevel="5.0" copyrightFields="false"
+    operationReflection="true" importOrganizing="true">
+  <foreignModel>farm_cv.ecore</foreignModel>
+  <testsDirectory xsi:nil="true"/>
+  <genPackages prefix="Farm_cv" disposableProviderFactory="true" ecorePackage="farm_cv.ecore#/">
+    <genDataTypes ecoreDataType="farm_cv.ecore#//ImageProcessor.1"/>
+    <genDataTypes ecoreDataType="farm_cv.ecore#//OutputBuilder.1"/>
+    <genClasses ecoreClass="farm_cv.ecore#//ImageProcessor">
+      <genOperations ecoreOperation="farm_cv.ecore#//ImageProcessor/fix_aquarium_rotation"/>
+      <genOperations ecoreOperation="farm_cv.ecore#//ImageProcessor/fix_background"/>
+      <genOperations ecoreOperation="farm_cv.ecore#//ImageProcessor/overlapping_area"/>
+      <genOperations ecoreOperation="farm_cv.ecore#//ImageProcessor/redraw_layout"/>
+      <genOperations ecoreOperation="farm_cv.ecore#//ImageProcessor/exec_analysis"/>
+      <genOperations ecoreOperation="farm_cv.ecore#//ImageProcessor/getInstance"/>
+    </genClasses>
+    <genClasses ecoreClass="farm_cv.ecore#//GenericAquarium">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute farm_cv.ecore#//GenericAquarium/center_coord_X"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute farm_cv.ecore#//GenericAquarium/center_coord_Y"/>
+    </genClasses>
+    <genClasses ecoreClass="farm_cv.ecore#//CameraObject">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute farm_cv.ecore#//CameraObject/width"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute farm_cv.ecore#//CameraObject/height"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute farm_cv.ecore#//CameraObject/scale"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute farm_cv.ecore#//CameraObject/rotation"/>
+    </genClasses>
+    <genClasses ecoreClass="farm_cv.ecore#//AnalyzedAnimal">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute farm_cv.ecore#//AnalyzedAnimal/X_pos"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute farm_cv.ecore#//AnalyzedAnimal/Y_pos"/>
+    </genClasses>
+    <genClasses ecoreClass="farm_cv.ecore#//Fish">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute farm_cv.ecore#//Fish/shape"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute farm_cv.ecore#//Fish/width"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute farm_cv.ecore#//Fish/height"/>
+    </genClasses>
+    <genClasses ecoreClass="farm_cv.ecore#//Cv_Controller">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute farm_cv.ecore#//Cv_Controller/processor"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute farm_cv.ecore#//Cv_Controller/build"/>
+    </genClasses>
+    <genClasses ecoreClass="farm_cv.ecore#//OutputBuilder">
+      <genOperations ecoreOperation="farm_cv.ecore#//OutputBuilder/apply_heatmap"/>
+      <genOperations ecoreOperation="farm_cv.ecore#//OutputBuilder/assemble_frames"/>
+      <genOperations ecoreOperation="farm_cv.ecore#//OutputBuilder/output_video"/>
+      <genOperations ecoreOperation="farm_cv.ecore#//OutputBuilder/getInstance"/>
+    </genClasses>
+  </genPackages>
+</genmodel:GenModel>
