@@ -2,7 +2,7 @@ from typing import List
 
 from attrs import define
 
-from farm_tool.core.models.sensors import Sensor
+from farm.core.models.sensors import Sensor
 
 
 @define

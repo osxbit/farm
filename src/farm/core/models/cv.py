@@ -1,14 +1,5 @@
 from attrs import define
 
-"""
-https://pdm-project.org/latest/
-
-ruff
-
-(Invoke-WebRequest -Uri https://pdm-project.org/install-pdm.py -UseBasicParsing).Content | python -
-
-
-"""
 
 @define
 class CameraObject:
@@ -17,15 +8,18 @@ class CameraObject:
     scale: float
     rotation: float
 
+
 @define
 class GenericAquarium(CameraObject):
     center_coord_x: float
     center_coord_y: float
 
+
 @define
 class AnalyzedAnimal:
     x_pos: float
     y_pos: float
+
 
 @define
 class Fish(AnalyzedAnimal):
@@ -33,54 +27,55 @@ class Fish(AnalyzedAnimal):
     width: float
     height: float
 
-@define
+
 class ImageProcessor:
-    def fix_aquarium_rotation():
+    def fix_aquarium_rotation(self):
         # implementation
         return
 
-    def fix_background():
+    def fix_background(self):
         # impl
         return
 
-    def overlapping_area():
+    def overlapping_area(self):
         # impl
         return
 
-    def redraw_layout():
+    def redraw_layout(self):
         # impl
         return
 
-    def exec_analysis():
+    def exec_analysis(self):
         # impl
         return
 
-    def get_instance():
+    def get_instance(self):
         # impl
         return
 
-@define
-class OutputBuilder():
-    def apply_heatmap():
+
+class OutputBuilder:
+    def apply_heatmap(self):
         # impl
         return
 
-    def assemble_frames():
+    def assemble_frames(self):
         # impl
         return
 
-    def output_video():
+    def output_video(self):
         # impl
         return
 
-    def get_instance():
+    def get_instance(self):
         # impl
         return
 
-@define
+
 class CvController:
-    processor = ImageProcessor
-    build = OutputBuilder
+    def __init__(self):
+        processor = ImageProcessor
+        build = OutputBuilder
 
-    processor.get_instance()
-    build.get_instance()
+        processor.get_instance()
+        build.get_instance()
