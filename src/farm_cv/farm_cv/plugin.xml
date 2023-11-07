@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+
+<!--
+-->
+
+<plugin>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated farm_cv -->
+      <package
+            uri="http://www.example.org/farm_cv"
+            class="farm_cv.Farm_cvPackage"
+            genModel="model/farm_cv.genmodel"/>
+   </extension>
+
+</plugin>
