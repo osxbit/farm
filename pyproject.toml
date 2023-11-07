@@ -1,9 +1,28 @@
+[build-system]
+requires = ["pdm-backend"]
+build-backend = "pdm.backend"
+
 [project]
-name="farm-dev"
+name = "farm-dev"
 version = "0.0.1"
-dependencies = [
-    "attrs"
+description = "Framework for Activity Real-time Monitoring software"
+authors = [
+    { name = "Adrian Valentin Panaintescu", email = "adrian.cert@gmail.com" },
+    { name = "Vlad Craciun", email = "craciun.vlad@yahoo.ie" },
+    { name = "Dragoș Baciu", email = "baciu.dragos17@gmail.com" },
+    { name = "Eduard Alexandru Baciu", email = "baciuedalex@gmail.com" },
+    { name = "Claudiu Catalin Strimbei", email = "claudiu.strimbei@gmail.com" },
 ]
+readme = "README.md"
+license = { text = "GPL-3.0-or-later" }
+dependencies = ["attrs"]
+
+
+[tool.setuptools]
+include-package-data = true
+
+[tool.setuptools.packages.find]
+include = ["farm"]
 
 [tool.ruff]
-extend-select = ["C", "N", "SIM"]
+extend-select = ["C", "N", "SIM", "PTH"]
