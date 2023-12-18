@@ -1,0 +1,195 @@
+body {
+  padding: 0px;
+  margin: 0px;
+  height: 100%;
+
+  .farm-project {
+    height: 100vh;
+    width: 100%;
+    display: flex;
+
+    .settings {
+      height: 100vh;
+      width: 23%;
+      background-color: #15a6af;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      .settings-container {
+        height: 90vh;
+        width: 77vw;
+        margin: 0px 10px;
+        border-radius: 30px;
+        background-color: #40b3a2;
+        box-shadow: 5px 5px;
+        padding: 10px 0px;
+
+        .settings-header {
+          display: flex;
+          justify-content: center;
+          padding: 15px 0px;
+        }
+
+        .settings-body {
+          padding: 0px 10px;
+
+          .setting {
+            padding-bottom: 10px;
+
+            .form-input {
+              display: flex;
+              align-items: center;
+
+              .checkbox-farm {
+                height: 20px;
+                width: 20px;
+              }
+
+              .checkbox-label-farm {
+                margin: 0px 0px 0px 10px;
+                font-size: 20px;
+                font-weight: 400;
+
+              }
+            }
+          }
+
+        }
+
+        .settings-footer {
+          height: 20vh;
+          display: flex;
+          justify-content: space-evenly;
+          flex-direction: column;
+          align-items: center;
+        }
+
+      }
+    }
+
+    .layout {
+      height: 100%;
+      width: 80%;
+      background-color: #15a6af;
+
+      .layout-container {
+        display: flex;
+        margin: 20px 0px;
+
+        .sensors {
+          height: 90vh;
+          width: 70%;
+          border-radius: 30px;
+          background-color: #40b3a2;
+          box-shadow: 5px 5px;
+          margin: 25px 10px;
+
+          .sensors-determination {
+            .draggable {
+              width: fit-content;
+              background-color: steelblue;
+              padding: 10px;
+              border-radius: 23px;
+            }
+
+            .droppable {
+              height: 300px;
+              width: 300px;
+              background-color: wheat;
+            }
+          }
+
+        }
+
+        .statistics {
+          height: 90vh;
+          width: 30%;
+          border-radius: 30px;
+          background-color: #40b3a2;
+          box-shadow: 5px 5px;
+          margin: 25px 10px;
+          padding: 0px 10px;
+          
+          .statistics-header {
+            display: flex;
+            justify-content: center;
+            padding: 15px 0px;
+            height: 10%;
+          }
+          
+          .statistics-content {
+            height: 80%;
+            overflow-y: auto;
+            .statistic-box {
+              background-color: wheat;
+              padding: 10px;
+              border-radius: 23px;
+              margin: 0px 5px 5px 0px
+            }
+          }
+
+          .statistics-export {
+            display: flex;
+            justify-content: center;
+            height: 10%;
+            padding-top: 20px;
+          }
+
+          .dinamically-container {
+            height: 90%;
+            overflow-y: auto;
+
+            .dinamically-header {
+              display: flex;
+              justify-content: center;
+              padding: 15px 0px;
+              height: 10%;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+body {
+  .button-farm {
+    height: 40px;
+    width: 200px;
+    border-radius: 20px;
+  }
+
+  .checkboxes-container {
+    .checkboxes-property {
+      display: flex;
+      align-items: center;
+      padding: 5px;
+      
+      .checkboxes-label {
+        min-width: 25%;
+      }
+    }
+  }
+
+  .enum-container {
+    .enum-property {
+      display: flex;
+      align-items: center;
+      padding: 5px;
+
+      .enum-label {
+        min-width: 25%;
+      }
+    }
+  }
+
+  .number-container {
+    .number-property {
+      padding: 5px;
+      .number-label {
+        min-width: 25%;
+      }
+    }
+  }
+}
