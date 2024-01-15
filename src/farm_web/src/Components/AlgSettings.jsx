@@ -4,6 +4,8 @@ import NumberInput from "../shared/NumberInput"
 import Select from "../shared/Select"
 
 function AlgSettings() {
+  const [ videoPath, setVideoPath] = createSignal('')
+  const [ configPath, setConfigPath] = createSignal('')
   const [ numberData, setNumberData ] = createSignal([])
   const [ enumData, setEnumData ] = createSignal([])
   const [ checkboxData, setCheckboxData ] = createSignal([])
@@ -36,7 +38,41 @@ function AlgSettings() {
       "name": 'Flag',
     },
   })
-  
+
+  const onVideoChangePath = (event) => {
+    setVideoPath(event.target.value)
+  }
+  const onConfigChangePath = (event) => {
+    setConfigPath(event.target.value)
+  }
+
+  const onSubmit = async (event) => {
+    event.preventDefault();
+
+    try {
+      const response = await fetch('http://localhost:5000/send_request', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          videoPath: videoPath(),
+          configPath: configPath(),
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+
+      const responseData = await response.json();
+      console.log('Response:', responseData);
+    } catch (error) {
+      console.error('Error:', error.message);
+    }
+  };
+
+
   Object.entries(parameters()).forEach(([key, value]) => {
     switch (value.type) {
       case "Number":
@@ -104,6 +140,30 @@ function AlgSettings() {
             </div>
           )
         })}
+      </div>
+      <div className="delimitator"></div>
+      <div className="integration">
+        <div className="input-file">
+          <label className="label-for-file" for="video-path">Video Path</label>
+          <input 
+            type="text" 
+            id="video-path"
+            value={videoPath()}
+            onChange={ onVideoChangePath }
+          />
+        </div>
+        <div className="input-file">
+          <label className="label-for-file" for="config-path">Config Path</label>
+          <input 
+            type="text" 
+            id="config-path"
+            value={configPath()}
+            onChange={ onConfigChangePath }
+          />
+        </div>
+        <div className="submit-button">
+          <button type="submit" onClick={onSubmit}>Submit</button>
+        </div>
       </div>
     </div>
   )
