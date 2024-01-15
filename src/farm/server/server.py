@@ -5,14 +5,14 @@ import logging
 import os
 import platform
 import ssl
-import aiohttp_cors
 
+import aiohttp_cors
 from aiohttp import web
 from aiortc import RTCPeerConnection, RTCSessionDescription
 from aiortc.contrib.media import MediaPlayer, MediaRelay
 from aiortc.rtcrtpsender import RTCRtpSender
 
-ROOT = os.path.dirname(__file__)
+ROOT = os.path.dirname(__file__)  # noqa: PTH120
 
 
 relay = None
@@ -52,12 +52,16 @@ def force_codec(pc, sender, forced_codec):
 
 
 async def index(request):
-    content = open(os.path.join(ROOT, "index.html"), "r").read()
+    content = open(  # noqa: SIM115, PTH123
+        os.path.join(ROOT, "index.html"), "r"  # noqa: PTH118
+    ).read()  # noqa: PTH118, SIM115, PTH123
     return web.Response(content_type="text/html", text=content)
 
 
 async def javascript(request):
-    content = open(os.path.join(ROOT, "client.js"), "r").read()
+    content = open(  # noqa: PTH123, SIM115
+        os.path.join(ROOT, "client.js"), "r"  # noqa: PTH118
+    ).read()  # noqa: PTH118, SIM115, PTH123
     return web.Response(content_type="application/javascript", text=content)
 
 
@@ -162,11 +166,18 @@ if __name__ == "__main__":
     app.router.add_get("/", index)
     app.router.add_get("/client.js", javascript)
     app.router.add_post("/offer", offer)
-    cors = aiohttp_cors.setup(app)
-    resource = cors.add(app.router.add_resource("/offer"))
-    cors.add(route, {
-        "*":
-            aiohttp_cors.ResourceOptions(allow_credentials=False),
-    })
+    cors = aiohttp_cors.setup(
+        app,
+        defaults={
+            "*": aiohttp_cors.ResourceOptions(
+                allow_credentials=True,
+                expose_headers="*",
+                allow_headers="*",
+            )
+        },
+    )
+
+    for route in list(app.router.routes()):
+        cors.add(route)
 
     web.run_app(app, host=args.host, port=args.port, ssl_context=ssl_context)
