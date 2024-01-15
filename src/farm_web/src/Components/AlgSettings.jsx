@@ -4,6 +4,8 @@ import NumberInput from "../shared/NumberInput"
 import Select from "../shared/Select"
 
 function AlgSettings() {
+  const [ videoPath, setVideoPath] = createSignal('')
+  const [ configPath, setConfigPath] = createSignal('')
   const [ numberData, setNumberData ] = createSignal([])
   const [ enumData, setEnumData ] = createSignal([])
   const [ checkboxData, setCheckboxData ] = createSignal([])
@@ -36,7 +38,91 @@ function AlgSettings() {
       "name": 'Flag',
     },
   })
-  
+
+  const onVideoChangePath = (event) => {
+    setVideoPath(event.target.value)
+  }
+  const onConfigChangePath = (event) => {
+    setConfigPath(event.target.value)
+  }
+
+  var pc = null;
+
+const negotiate = (videoPath, configPath) => {
+    pc.addTransceiver('video', {direction: 'recvonly'});
+    pc.addTransceiver('audio', {direction: 'recvonly'});
+    return pc.createOffer().then(function(offer) {
+        return pc.setLocalDescription(offer);
+    }).then(() => {
+        // wait for ICE gathering to complete
+        return new Promise((resolve) => {
+            if (pc.iceGatheringState === 'complete') {
+                resolve();
+            } else {
+                function checkState() {
+                    if (pc.iceGatheringState === 'complete') {
+                        pc.removeEventListener('icegatheringstatechange', checkState);
+                        resolve();
+                    }
+                }
+                pc.addEventListener('icegatheringstatechange', checkState);
+            }
+        });
+    }).then(() => {
+        console.log('am intrat', videoPath, configPath)
+        var offer = pc.localDescription;
+        return fetch('http://localhost:4321/offer', {
+            body: JSON.stringify({
+                sdp: offer.sdp,
+                type: offer.type,
+                videoPath: videoPath,
+                configPath: configPath,
+            }),
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            method: 'POST'
+        });
+    }).then((response) => {
+        return response.json();
+    }).then((answer) => {
+        return pc.setRemoteDescription(answer);
+    }).catch((e) => {
+        alert(e);
+    });
+}
+
+const start = () => {
+    var config = {
+      sdpSemantics: 'unified-plan'
+    };
+
+    pc = new RTCPeerConnection(config);
+
+    // connect audio / video
+    pc.addEventListener('track', function(evt) {
+      if (evt.track.kind == 'video') {
+        document.getElementById('video').srcObject = evt.streams[0];
+      } else {
+        document.getElementById('audio').srcObject = evt.streams[0];
+      }
+    });
+
+    document.getElementById('stop').className = ''
+    document.getElementById('start').className = 'dontdisplay'
+    negotiate(videoPath(), configPath());
+  }
+
+  const stop = () => {
+    document.getElementById('stop').className = 'dontdisplay'
+    document.getElementById('start').className = ''
+
+    // close peer connection
+    setTimeout(function() {
+        pc.close();
+    }, 500);
+}
+
   Object.entries(parameters()).forEach(([key, value]) => {
     switch (value.type) {
       case "Number":
@@ -104,6 +190,31 @@ function AlgSettings() {
             </div>
           )
         })}
+      </div>
+      <div className="delimitator"></div>
+      <div className="integration">
+        <div className="input-file">
+          <label className="label-for-file" for="video-path">Video Path</label>
+          <input 
+            type="text" 
+            id="video-path"
+            value={videoPath()}
+            onChange={ onVideoChangePath }
+          />
+        </div>
+        <div className="input-file">
+          <label className="label-for-file" for="config-path">Config Path</label>
+          <input 
+            type="text" 
+            id="config-path"
+            value={configPath()}
+            onChange={ onConfigChangePath }
+          />
+        </div>
+        <div className="submit-button">
+          <button type="submit" id="start" onClick={start}>Start</button>
+          <button type="submit" id="stop" className="dontdisplay" onClick={stop}>Stop</button>
+        </div>
       </div>
     </div>
   )

@@ -86,17 +86,18 @@ body {
           margin: 25px 10px;
 
           .sensors-determination {
-            .draggable {
-              width: fit-content;
-              background-color: steelblue;
-              padding: 10px;
-              border-radius: 23px;
-            }
+            display: flex;
+            justify-content: center;
 
-            .droppable {
-              height: 300px;
-              width: 300px;
-              background-color: wheat;
+            .media-querry {
+              display: flex;
+              justify-content: center;
+              flex-direction: column;
+              margin-top: 20px;
+              
+              .minimize-video {
+                max-width: 800px;
+              }
             }
           }
 
@@ -146,6 +147,31 @@ body {
               padding: 15px 0px;
               height: 10%;
             }
+
+            .delimitator {
+              margin: 10px 0px;
+              border: 1px solid black;
+            }
+
+            .integration {
+              display: flex;
+              flex-direction: column;
+
+              .input-file {
+                .label-for-file {
+                  padding: 5px;
+                  min-width: 105px;
+                }
+              }
+            }
+
+            .submit-button {
+              margin-top: 15px;
+              display: flex;
+              justify-content: center;
+              border-radius: 23px;
+            }
+
           }
         }
       }
@@ -192,4 +218,8 @@ body {
       }
     }
   }
+}
+
+.dontdisplay {
+  display: none;
 }
