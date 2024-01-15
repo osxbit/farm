@@ -46,31 +46,70 @@ function AlgSettings() {
     setConfigPath(event.target.value)
   }
 
-  const onSubmit = async (event) => {
-    event.preventDefault();
+  var pc = null;
 
-    try {
-      const response = await fetch('http://localhost:5000/send_request', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          videoPath: videoPath(),
-          configPath: configPath(),
-        }),
-      });
+const negotiate = (videoPath, configPath) => {
+    pc.addTransceiver('video', {direction: 'recvonly'});
+    pc.addTransceiver('audio', {direction: 'recvonly'});
+    return pc.createOffer().then(function(offer) {
+        return pc.setLocalDescription(offer);
+    }).then(function() {
+        // wait for ICE gathering to complete
+        return new Promise(function(resolve) {
+            if (pc.iceGatheringState === 'complete') {
+                resolve();
+            } else {
+                function checkState() {
+                    if (pc.iceGatheringState === 'complete') {
+                        pc.removeEventListener('icegatheringstatechange', checkState);
+                        resolve();
+                    }
+                }
+                pc.addEventListener('icegatheringstatechange', checkState);
+            }
+        });
+    }).then(function() {
+        var offer = pc.localDescription;
+        return fetch('http://localhost:4321/offer', {
+            body: JSON.stringify({
+                sdp: offer.sdp,
+                type: offer.type,
+                videoPath: videoPath,
+                configPath: configPath,
+            }),
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            method: 'POST'
+        });
+    }).then(function(response) {
+        return response.json();
+    }).then(function(answer) {
+        return pc.setRemoteDescription(answer);
+    }).catch(function(e) {
+        alert(e);
+    });
+}
 
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
+const start = () => {
+    console.log('BUNA ZIUIA')
+    var config = {
+        sdpSemantics: 'unified-plan'
+    };
 
-      const responseData = await response.json();
-      console.log('Response:', responseData);
-    } catch (error) {
-      console.error('Error:', error.message);
-    }
-  };
+    pc = new RTCPeerConnection(config);
+
+    // connect audio / video
+    pc.addEventListener('track', function(evt) {
+        if (evt.track.kind == 'video') {
+          document.getElementById('video').srcObject = evt.streams[0];
+        } else {
+          document.getElementById('audio').srcObject = evt.streams[0];
+        }
+    });
+
+    negotiate(videoPath, configPath);
+  }
 
 
   Object.entries(parameters()).forEach(([key, value]) => {
@@ -162,7 +201,7 @@ function AlgSettings() {
           />
         </div>
         <div className="submit-button">
-          <button type="submit" onClick={onSubmit}>Submit</button>
+          <button type="submit" onClick={start}>Submit</button>
         </div>
       </div>
     </div>

@@ -22,6 +22,7 @@ dependencies = [
     "aiortc>=1.5.0",
     "betterproto>=1.2.5",
     "grpclib>=0.4.6",
+    "aiohttp-cors>=0.7.0",
 ]
 
 

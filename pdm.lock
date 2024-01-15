@@ -4,8 +4,8 @@
 [metadata]
 groups = ["default", ":dev", "dev", "demo"]
 strategy = ["cross_platform"]
-lock_version = "4.4"
-content_hash = "sha256:a2715d2fd56c6ec3102bee1799efb2aa8af40039f7f0422d6a68a100d8e30bca"
+lock_version = "4.4.1"
+content_hash = "sha256:58e5a7d0af2a23d3ca337d9f0fbab96f6f8f5207a103f74011291cc2ace53454"
 
 [[package]]
 name = "aiohttp"
@@ -97,6 +97,18 @@ files = [
     {file = "aiohttp-3.9.1-cp39-cp39-win32.whl", hash = "sha256:82eefaf1a996060602f3cc1112d93ba8b201dbf5d8fd9611227de2003dddb3b7"},
     {file = "aiohttp-3.9.1-cp39-cp39-win_amd64.whl", hash = "sha256:9b05d33ff8e6b269e30a7957bd3244ffbce2a7a35a81b81c382629b80af1a8bf"},
     {file = "aiohttp-3.9.1.tar.gz", hash = "sha256:8fc49a87ac269d4529da45871e2ffb6874e87779c3d0e2ccd813c0899221239d"},
+]
+
+[[package]]
+name = "aiohttp-cors"
+version = "0.7.0"
+summary = "CORS support for aiohttp"
+dependencies = [
+    "aiohttp>=1.1",
+]
+files = [
+    {file = "aiohttp-cors-0.7.0.tar.gz", hash = "sha256:4d39c6d7100fd9764ed1caf8cebf0eb01bf5e3f24e2e073fda6234bc48b19f5d"},
+    {file = "aiohttp_cors-0.7.0-py3-none-any.whl", hash = "sha256:0451ba59fdf6909d0e2cd21e4c0a43752bc0703d33fc78ae94d9d9321710193e"},
 ]
 
 [[package]]
