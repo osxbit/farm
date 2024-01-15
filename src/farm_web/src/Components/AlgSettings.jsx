@@ -53,9 +53,9 @@ const negotiate = (videoPath, configPath) => {
     pc.addTransceiver('audio', {direction: 'recvonly'});
     return pc.createOffer().then(function(offer) {
         return pc.setLocalDescription(offer);
-    }).then(function() {
+    }).then(() => {
         // wait for ICE gathering to complete
-        return new Promise(function(resolve) {
+        return new Promise((resolve) => {
             if (pc.iceGatheringState === 'complete') {
                 resolve();
             } else {
@@ -68,7 +68,8 @@ const negotiate = (videoPath, configPath) => {
                 pc.addEventListener('icegatheringstatechange', checkState);
             }
         });
-    }).then(function() {
+    }).then(() => {
+        console.log('am intrat', videoPath, configPath)
         var offer = pc.localDescription;
         return fetch('http://localhost:4321/offer', {
             body: JSON.stringify({
@@ -82,35 +83,45 @@ const negotiate = (videoPath, configPath) => {
             },
             method: 'POST'
         });
-    }).then(function(response) {
+    }).then((response) => {
         return response.json();
-    }).then(function(answer) {
+    }).then((answer) => {
         return pc.setRemoteDescription(answer);
-    }).catch(function(e) {
+    }).catch((e) => {
         alert(e);
     });
 }
 
 const start = () => {
-    console.log('BUNA ZIUIA')
     var config = {
-        sdpSemantics: 'unified-plan'
+      sdpSemantics: 'unified-plan'
     };
 
     pc = new RTCPeerConnection(config);
 
     // connect audio / video
     pc.addEventListener('track', function(evt) {
-        if (evt.track.kind == 'video') {
-          document.getElementById('video').srcObject = evt.streams[0];
-        } else {
-          document.getElementById('audio').srcObject = evt.streams[0];
-        }
+      if (evt.track.kind == 'video') {
+        document.getElementById('video').srcObject = evt.streams[0];
+      } else {
+        document.getElementById('audio').srcObject = evt.streams[0];
+      }
     });
 
-    negotiate(videoPath, configPath);
+    document.getElementById('stop').className = ''
+    document.getElementById('start').className = 'dontdisplay'
+    negotiate(videoPath(), configPath());
   }
 
+  const stop = () => {
+    document.getElementById('stop').className = 'dontdisplay'
+    document.getElementById('start').className = ''
+
+    // close peer connection
+    setTimeout(function() {
+        pc.close();
+    }, 500);
+}
 
   Object.entries(parameters()).forEach(([key, value]) => {
     switch (value.type) {
@@ -201,7 +212,8 @@ const start = () => {
           />
         </div>
         <div className="submit-button">
-          <button type="submit" onClick={start}>Submit</button>
+          <button type="submit" id="start" onClick={start}>Start</button>
+          <button type="submit" id="stop" className="dontdisplay" onClick={stop}>Stop</button>
         </div>
       </div>
     </div>

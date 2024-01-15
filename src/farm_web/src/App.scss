@@ -86,17 +86,18 @@ body {
           margin: 25px 10px;
 
           .sensors-determination {
-            .draggable {
-              width: fit-content;
-              background-color: steelblue;
-              padding: 10px;
-              border-radius: 23px;
-            }
+            display: flex;
+            justify-content: center;
 
-            .droppable {
-              height: 300px;
-              width: 300px;
-              background-color: wheat;
+            .media-querry {
+              display: flex;
+              justify-content: center;
+              flex-direction: column;
+              margin-top: 20px;
+              
+              .minimize-video {
+                max-width: 800px;
+              }
             }
           }
 
@@ -217,4 +218,8 @@ body {
       }
     }
   }
+}
+
+.dontdisplay {
+  display: none;
 }
