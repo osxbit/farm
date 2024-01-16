@@ -36,6 +36,12 @@ demo = [
     "opencv-python>=4.8.1.78",
     "camera>=1.3.0",
 ]
+agent = [
+    "aiohttp>=3.9.1",
+    "aiortc>=1.6.0",
+    "PyYaml>=6.0.1",
+    "msgspec>=0.18.5",
+]
 
 [tool.setuptools]
 include-package-data = true
@@ -44,4 +50,4 @@ include-package-data = true
 include = ["farm"]
 
 [tool.ruff]
-extend-select = ["C", "N", "SIM", "PTH", "I"]
+extend-select = ["C", "N", "SIM", "PTH", "I", "PL", "F", "S", "A", "E", "G", "B", "W", "Q"]
