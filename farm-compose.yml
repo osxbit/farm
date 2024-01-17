@@ -4,9 +4,9 @@ nodes:
     dependencies:
       - cv2
     settings:
-      rotate: 25
-      scale: 0.5
-      translate: [0.2, 0.2]
+      rotate: -60
+      scale: 1.2
+      translate: [-30, -20]
       # todo: to research about shear
       # shear: 0.2
       flip: 0.5

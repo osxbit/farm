@@ -18,14 +18,14 @@ class SingletonMeta(type):
         return cls._instance
 
 
-class StreamControllerWarehouse(meta=SingletonMeta):
-    def __init__(self):
-        self._stream_controller = None
+# class StreamControllerWarehouse(meta=SingletonMeta):
+#     def __init__(self):
+#         self._stream_controller = None
 
-    async def get_stream_controller(self):
-        if self._stream_controller is None:
-            self._stream_controller = await setup_streaming()
-        return self._stream_controller
+#     async def get_stream_controller(self):
+#         if self._stream_controller is None:
+#             self._stream_controller = await setup_streaming()
+#         return self._stream_controller
 
 
 class StreamProcessorTrack(MediaStreamTrack):
@@ -35,7 +35,8 @@ class StreamProcessorTrack(MediaStreamTrack):
         super().__init__()
         self.track = track
         self.processor = processor
-        self.processor.bind_source(self, track)
+        self.processor.bind_source(track)
+        self.processor.prepare()
 
     async def recv(self):
         return await self.processor.recv()

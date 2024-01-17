@@ -4,6 +4,7 @@
         "aiortc",
         "connectionstatechange",
         "fillvalue",
-        "msgspec"
+        "msgspec",
+        "ndarray"
     ]
 }
