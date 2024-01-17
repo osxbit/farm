@@ -52,6 +52,7 @@ class MulticastQueue:
         return subscription
 
     def unsubscribe(self, subscription: MulticastQueueSubscription) -> None:
+        subscription.current = MulticastQueueItem(None)
         self.subscribers.remove(subscription)
 
     def notify(self):
