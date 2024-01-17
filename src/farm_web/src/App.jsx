@@ -1,34 +1,40 @@
 import { createSignal } from 'solid-js'
-import solidLogo from './assets/solid.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import './App.scss'
+import Settings from './Components/Settings'
+import Layout from './components/Layout'
 
 function App() {
-  const [count, setCount] = createSignal(0)
+
+  const [ fishSettings, setFishSettings ] = createSignal({
+    'f_highlight': false, 
+    'f_heatmap': false, 
+    'f_movement': false,
+    'scale_percent': 0,
+    'split_image': true,
+    'ss_build': true,
+    'save_dataset': true,
+    'path_to_recording': '',
+  })
 
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} class="logo" alt="Vite logo" />
-        </a>
-        <a href="https://solidjs.com" target="_blank">
-          <img src={solidLogo} class="logo solid" alt="Solid logo" />
-        </a>
+    <div className="farm-project">
+      <div className="settings">
+        <div className="settings-container">
+          <Settings
+            fishSettings = {fishSettings()}
+            setFishSettings = {setFishSettings}
+          />
+        </div>
       </div>
-      <h1>Vite + Solid</h1>
-      <div class="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count()}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
+      <div className="layout">
+        <div className="layout-container">
+          <Layout
+            fishSettings = {fishSettings()}
+            setFishSettins = {setFishSettings}
+          />
+        </div>
       </div>
-      <p class="read-the-docs">
-        Click on the Vite and Solid logos to learn more
-      </p>
-    </>
+    </div>
   )
 }
 

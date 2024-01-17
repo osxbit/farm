@@ -18,3 +18,7 @@ First off, thanks for taking the time to contribute! ❤️
 0. Dragoș Baciu <[baciu.dragos17@gmail.com](mailto:baciu.dragos17@gmail.com)> - Member
 0. Eduard Alexandru Baciu <[baciuedalex@gmail.com](mailto:baciuedalex@gmail.com)> - Member
 0. Claudiu Catalin Strimbei <[claudiu.strimbei@gmail.com](mailto:claudiu.strimbei@gmail.com)> - Member
+
+## Documents
+
+[docs/technical-report](https://docs.google.com/document/d/1FHX4oyn16_6Qc4XHXYjYXi792HeBvBBOPw1RRkh57KQ/edit?usp=sharing)

@@ -1,0 +1,29 @@
+syntax = "proto3";
+
+package agent;
+
+service ComputeAgent {
+    rpc Start() returns ();
+    rpc Echo(EchoRequest) returns (EchoResponse);
+    rpc EchoStream(EchoRequest) returns (stream EchoStreamResponse);
+  }
+
+message OperationStatus {
+    bool ok = 1;
+    string details = 1;
+}
+
+message EchoRequest {
+  string value = 1;
+  // Number of extra times to echo
+  uint32 extra_times = 2;
+}
+
+message EchoResponse {
+  repeated string values = 1;
+}
+
+message EchoStreamResponse  {
+  string value = 1;
+}
+
