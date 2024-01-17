@@ -2,9 +2,9 @@ import argparse
 import asyncio
 import json
 import logging
-import os
 import platform
 import ssl
+from pathlib import Path
 
 import aiohttp_cors
 from aiohttp import web
@@ -12,7 +12,7 @@ from aiortc import RTCPeerConnection, RTCSessionDescription
 from aiortc.contrib.media import MediaPlayer, MediaRelay
 from aiortc.rtcrtpsender import RTCRtpSender
 
-ROOT = os.path.dirname(__file__)  # noqa: PTH120
+ROOT = Path(__file__).parent
 
 
 relay = None
@@ -20,7 +20,7 @@ webcam = None
 
 
 def create_local_tracks(play_from, decode):
-    global relay, webcam
+    global relay, webcam  # noqa: PLW0603
 
     if play_from:
         player = MediaPlayer(play_from, decode=decode)
@@ -42,6 +42,19 @@ def create_local_tracks(play_from, decode):
         return None, relay.subscribe(webcam.video)
 
 
+from farm.agent.server import StreamProcessorTrack  # noqa: I001, E402, F401
+from farm.agent.orchestration import (  # noqa: E402, F401
+    OrchestrationMaster,
+    OrchestrationNode,
+    OrchestrationContext,
+)
+
+
+def create_processing_track(track, configuration_path: str):
+    configuration = OrchestrationContext.load(configuration_path)
+    return StreamProcessorTrack(track, OrchestrationMaster(configuration))
+
+
 def force_codec(pc, sender, forced_codec):
     kind = forced_codec.split("/")[0]
     codecs = RTCRtpSender.getCapabilities(kind).codecs
@@ -52,17 +65,17 @@ def force_codec(pc, sender, forced_codec):
 
 
 async def index(request):
-    content = open(  # noqa: SIM115, PTH123
-        os.path.join(ROOT, "index.html"), "r"  # noqa: PTH118
-    ).read()  # noqa: PTH118, SIM115, PTH123
-    return web.Response(content_type="text/html", text=content)
+    return web.Response(
+        content_type="text/html",
+        text=ROOT.joinpath("index.html").read_text(),
+    )
 
 
 async def javascript(request):
-    content = open(  # noqa: PTH123, SIM115
-        os.path.join(ROOT, "client.js"), "r"  # noqa: PTH118
-    ).read()  # noqa: PTH118, SIM115, PTH123
-    return web.Response(content_type="application/javascript", text=content)
+    return web.Response(
+        content_type="application/javascript",
+        text=ROOT.joinpath("client.js").read_text(),
+    )
 
 
 async def offer(request):
@@ -84,6 +97,9 @@ async def offer(request):
     audio, video = create_local_tracks(
         params["videoPath"], decode=not args.play_without_decoding
     )
+    # open media source as processing
+    if params.get("configPath"):
+        video = create_processing_track(video, params["configPath"])
 
     if audio:
         audio_sender = pc.addTrack(audio)
@@ -136,7 +152,7 @@ if __name__ == "__main__":
         action="store_true",
     )
     parser.add_argument(
-        "--host", default="0.0.0.0", help="Host for HTTP server (default: 0.0.0.0)"
+        "--host", default="127.0.0.1", help="Host for HTTP server (default: 0.0.0.0)"
     )
     parser.add_argument(
         "--port", type=int, default=4321, help="Port for HTTP server (default: 8080)"
